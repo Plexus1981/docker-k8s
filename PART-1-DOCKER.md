@@ -261,7 +261,7 @@ Hands-on practice quest #01: pre-built disk image lifecycle (15+5)
 - [ ] Given пары участников
   
 - [ ] When участники именуют сценарии, выполняют команды и анализируют их вывод и поведение
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть список образов на хосте?"
 ```shell
 docker image ls # TODO: собственные пометки участников для будущего использования в проектах
 ```
@@ -272,44 +272,44 @@ docker image pull {{ os-registry }}/alpine:3.14
 docker image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть инфомацию об образе?"
 ```shell
-docker image history {{ os-registry }}/alpine:3.14
+docker image history artifactory.raiffeisen.ru/ext-rbru-osimage-docker/alpine:3.14
 
-docker image inspect {{ os-registry }}/alpine:3.14
-docker image inspect --format='{{.Id}} -> {{.Parent}}' {{ os-registry }}/alpine:3.14
+docker image inspect artifactory.raiffeisen.ru/ext-rbru-osimage-docker/alpine:3.14
+docker image inspect --format='{{.Id}} -> {{.Parent}}' artifactory.raiffeisen.ru/ext-rbru-osimage-docker/alpine:3.14
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как посмотреть изменения в файловой системе контейнере и закоммитить изменения образа?"
 ```shell
-docker container run --name demo -it {{ os-registry }}/alpine:3.14
+docker container run --name demo -it artifactory.raiffeisen.ru/ext-rbru-osimage-docker/alpine:3.14
 /# touch side-effect.txt
 /# exit
-docker container diff demo
-docker container commit demo {{ project-registry }}/{{account}}/demo
+docker container diff demo  # СПРОСИТЬ !!!
+docker container commit demo artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo
 docker image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как присвоить новое символьное имя существующему образу ?"
 ```shell
-docker image tag {{ project-registry }}/{{account}}/demo:latest {{ project-registry }}/{{account}}/demo:1.0.0
+docker image tag artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo:latest artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo:1.0.0
 docker image ls
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как запушить образ в артифактори?"   
 ```shell
-docker image push {{ project-registry }}/{{account}}/demo:1.0.0
+docker image push artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo:latest
 ```
 
-- Сценарий "Как ...?"
+- Сценарий "Как удалять контейнеры и образы?"
 ```shell
 docker image ls
 docker container rm demo
 docker image prune
 docker image ls
-docker image rm {{ project-registry }}/{{account}}/demo:1.0.0
+docker image rm artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo:1.0.0
 docker image ls
-docker image rm {{ project-registry }}/{{account}}/demo:latest
+docker image rm artifactory.raiffeisen.ru/container-training-docker/ruakmim/demo:latest
 docker image ls
 docker image prune --all
 ```
